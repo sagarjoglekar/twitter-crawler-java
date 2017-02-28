@@ -1,0 +1,39 @@
+<?xml version="1.0" ?> 
+<project name="twitter-crawler" default="compress">
+
+	<target name="init">
+		<mkdir dir="build/classes" />
+		<mkdir dir="dist/lib" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="src" encoding="utf-8" destdir="build/classes" includeantruntime="false" debug="true">
+	    <classpath>
+	      <pathelement path="${classpath}"/>
+	      <fileset dir="lib">
+	        <include name="**/*.jar"/>
+	      </fileset>
+	    </classpath>
+		</javac>
+	</target>
+	
+	<target name="compress" depends="compile">
+	  <jar destfile="dist/lib/twitter-crawler.jar" basedir="build/classes" />
+    <copy todir="dist/lib">
+      <fileset dir="lib">
+        <include name="**/*.jar"/>
+      </fileset>
+    </copy>
+<!--    <copy todir="dist/log">
+      <fileset dir="log">
+        <include name="**/*.properties"/>
+      </fileset>
+    </copy>-->
+	  <echo file="dist/runner.sh" append="false">java -Xms16384m -Xmx16384m -classpath lib/java-json.jar:lib/gson-2.2.4.jar:lib/jsoup-1.8.1.jar:lib/twitter-crawler.jar crawler.$1 $2</echo>
+	</target>
+	
+	<target name="clean">
+		<delete dir="build" />
+	</target>
+	
+</project>

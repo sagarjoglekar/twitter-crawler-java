@@ -67,6 +67,7 @@ public abstract class TwitterReplies {
         	string += line + "\r\n";
         	line = reader.readLine();
         }
+        System.out.print(string);
         JSONObject jsonObject = new JSONObject(string);   
 //        
 //        Gson gson = new Gson();
@@ -91,8 +92,12 @@ public abstract class TwitterReplies {
   public final static String SCROLL_CURSOR_PARAM = "max_position";
 //  https://twitter.com/i/comma_com_ua/conversation/604928517479010304?include_available_features=1&include_entities=1&max_position=605117091063152640
 //  https://twitter.com/i/comma_com_ua/conversation/604928517479010304?include_available_features=1&include_entities=1&max_position=606093682278809602
+//  public final static String TWITTER_REPLIES_URL = "https://twitter.com/i/";
+// https://twitter.com/NathanConstable/status/845335915287465985?conversation_id=845335915287465985
+//https://twitter.com/i/NathanConstable/conversation/845335915287465985?include_available_features=1&include_entities=1&reset_error_state=false
   public final static String TWITTER_REPLIES_URL = "https://twitter.com/i/";
   public final static String TWITTER_REPLIES_URL_SECOND_PART = "/conversation/";
+  public final static String TWITTER_REPLIES_URL_THIRD_PART = "?conversation_id=";
      
   public static URL constructURL(final String tweetId, final String accountId, final String cursor) throws InvalidQueryException {
           if(tweetId==null || tweetId.isEmpty()) {
@@ -101,7 +106,7 @@ public abstract class TwitterReplies {
           try {
 
           	String url = TWITTER_REPLIES_URL + accountId + TWITTER_REPLIES_URL_SECOND_PART;
-          	url += tweetId + "?include_available_features=1&include_entities=1&max_position=" + cursor;
+          	url += tweetId + "?include_available_features=1&include_entities=1&reset_error_state=false&max_position=" + cursor;
 	          System.out.println(url);
 	          return new URL(url);
           } catch(MalformedURLException e) {

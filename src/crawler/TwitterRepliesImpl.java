@@ -57,14 +57,15 @@ public class TwitterRepliesImpl extends TwitterReplies {
  
     public static void main(String[] args) throws InvalidQueryException {
 		  try {
-		  	fileName = "out/daily-suicides/suicides-daily-v3.replies";
-		  	linksFileName = "out/daily-suicides/suicides-daily-v3.links";
+		  	fileName = "westMin.replies";
+		  	linksFileName = "westMin.links";
 		  	writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8"));
 		  	writer.close();
 		  	linksWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(linksFileName), "UTF-8"));
 		  	linksWriter.close();
 
-			  BufferedReader reader = new BufferedReader(new FileReader("out/daily-suicides/suicides-all-filtered-v3.csv"));
+//			  BufferedReader reader = new BufferedReader(new FileReader(".csv"));
+		  	  BufferedReader reader = new BufferedReader(new FileReader("westMinster.tweets"));
 			  String line = reader.readLine();
 			  line = reader.readLine();
 			  boolean skipBeforeId = false;
@@ -74,13 +75,13 @@ public class TwitterRepliesImpl extends TwitterReplies {
 //			  	String id = line.split("\\|\\|\\|")[0];
 //			  	String account = line.split("\\|\\|\\|")[4];
 			  	//This piece is from official crawler 
-			  	String id = line.split(",")[0];
-			  	String account = line.split(",")[2];
+			  	String id = line.split("\\|")[0];
+			  	String account = line.split("\\|")[12];
 			  	if (!skipBeforeId) {
 			  		System.out.println("[" + i + "] " + id + " " + account);
 				  	TwitterRepliesImpl twitterReplies = new TwitterRepliesImpl();
 //				  twitterReplies.originalTweet = line;
-				  	twitterReplies.originalTweetContent = line;
+				  	twitterReplies.originalTweetContent = line.split("\\|")[3];
 				  	twitterReplies.search(id, account, 0);
 //				  	break;
 			  	}

@@ -38,14 +38,15 @@ public class TwitterSearchImpl extends TwitterSearch {
  
     public static void main(String[] args) throws InvalidQueryException {
 		  try {
-		  	fileName = "/home/dmytro/mnt/dmytro/drought-selfie.tweets";
+		  	fileName = "westMinster.tweets";
 		  	writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8"));
 		  	writer.close();
 		  } catch (IOException e) {
 				e.printStackTrace();
 			}
     	  TwitterSearch twitterSearch = new TwitterSearchImpl();
-        twitterSearch.search("#DroughtSelfie OR #KeepSavingCA OR #Waterscarcity OR #Flintwatercrisis OR #SaoPauloDrought", 2000);
+        //twitterSearch.search("#DroughtSelfie OR #KeepSavingCA OR #Waterscarcity OR #Flintwatercrisis OR #SaoPauloDrought", 2000);
+    	  twitterSearch.search("#WestminsterAttack OR WestminsterAttack OR #WeStandTogether OR #pcpalmer OR #Westminster OR #WeAreNotAfraid until:2017-03-25 since:2015-03-21", 20000);
     }
 }
 

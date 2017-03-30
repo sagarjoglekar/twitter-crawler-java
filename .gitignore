@@ -1,2 +1,13 @@
 bin/crawler
 .settings/org.eclipse.core.resources.prefs
+tweetMap.json
+newsTweets.links
+westMin.links
+westMin.replies
+LIWC2015_westMin_cascade.csv
+edges.csv
+test.html
+newsSearch.tweets
+westMin.tweets
+westMinster.tweets
+.test.html.swp

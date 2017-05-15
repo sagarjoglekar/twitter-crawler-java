@@ -88,8 +88,8 @@ for i in range(len(replies)):
 
 
 with open('edges.csv', 'w') as csvfile:
-    fieldnames = ['src' , 'dest'  , 'parent', 'uid' , 'uname' , 'destunames', 'likes' , 'retweet' , 'content' ]
+    fieldnames = ['src' , 'dest'  , 'parent', 'uid' , 'uname' , 'destunames', 'likes' , 'retweet' , 'content' ,'timestamp' ]
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for e in edgeMap:
-        writer.writerow({'src': e['src'], 'dest': e['dest'], 'parent' : e['parent'] , 'uid': e['uid'], 'uname':e['uname'] , 'destunames': e['dstUnames'] , 'likes': e['likes'] , 'retweet': e['retweet'] , 'content':e['content'] })
+        writer.writerow({'src': e['src'], 'dest': e['dest'], 'parent' : e['parent'] , 'uid': e['uid'], 'uname':e['uname'] , 'destunames': e['dstUnames'] , 'likes': e['likes'] , 'retweet': e['retweet'] , 'content':e['content'] , 'timestamp':e['time'] })

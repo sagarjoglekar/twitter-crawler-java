@@ -1,5 +1,16 @@
 import json
 import csv
+import re
+
+
+def getUnames(tweet):
+    regex = r"\B@([^\W]+)"
+    matches = re.finditer(regex, tweet)
+    unames = ''
+    for matchNum, match in enumerate(matches):
+        unames = unames + "|" + tweet[match.start()+1:match.end()]
+    return unames
+
 
 with open("westMin.replies",'rb') as f:
     replies = f.readlines()
@@ -16,6 +27,7 @@ for t in tweets:
     tweetMap[comps[0]]['likes'] = comps[7]
     tweetMap[comps[0]]['retweet'] = comps[6]
     tweetMap[comps[0]]['content'] = comps[1]
+    tweetMap[comps[0]]['time'] = comps[5]
 
 
 
@@ -33,6 +45,8 @@ for i in range(len(replies)):
         edge['retweet'] = tweetMap[edge['src']]['retweet']
         edge['uid'] = tweetMap[edge['src']]['uid']
         edge['uname'] = tweetMap[edge['src']]['uname']
+        edge['time'] = tweetMap[edge['src']]['time']
+        edge['dstUnames'] = getUnames(comps[0])
     else:
         edge['dest']=comps[-2]
         edge['parent'] = comps[-1]
@@ -42,6 +56,8 @@ for i in range(len(replies)):
         edge['retweet'] = comps[6]
         edge['uid'] = comps[2]
         edge['uname'] = comps[4]
+        edge['time'] = comps[5]
+        edge['dstUnames'] = getUnames(comps[1])
 
         tweetMap[comps[0]] = dict()
         tweetMap[comps[0]]['uid'] = comps[2]
@@ -49,8 +65,12 @@ for i in range(len(replies)):
         tweetMap[comps[0]]['likes'] = comps[7]
         tweetMap[comps[0]]['retweet'] = comps[6]
         tweetMap[comps[0]]['content'] = comps[1]
+        tweetMap[comps[0]]['time'] = comps[5]
 
     edgeMap.append(edge)
+
+
+
 
 # with open('tweetMap.json', 'w') as fp:
 #     json.dump(tweetMap, fp)
@@ -68,8 +88,8 @@ for i in range(len(replies)):
 
 
 with open('edges.csv', 'w') as csvfile:
-    fieldnames = ['src' , 'dest'  , 'parent', 'uid' , 'likes' , 'retweet' , 'content' ]
+    fieldnames = ['src' , 'dest'  , 'parent', 'uid' , 'uname' , 'destunames', 'likes' , 'retweet' , 'content' ]
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for e in edgeMap:
-        writer.writerow({'src': e['src'], 'dest': e['dest'], 'parent' : e['parent'] , 'uid': e['uid'], 'likes': e['likes'], 'retweet': e['retweet'], 'content':e['content']})
+        writer.writerow({'src': e['src'], 'dest': e['dest'], 'parent' : e['parent'] , 'uid': e['uid'], 'uname':e['uname'] , 'destunames': e['dstUnames'] , 'likes': e['likes'] , 'retweet': e['retweet'] , 'content':e['content'] })
